@@ -16,7 +16,6 @@ Suggested fields:
 - website_url text nullable
 - industry text nullable
 - timezone text nullable
-- crm_mapping_id uuid nullable
 - created_at
 - updated_at
 
@@ -46,6 +45,8 @@ Suggested fields:
 
 Do not put all domain collections into this row. Offers, personas, goals, competitors and knowledge are separate entities.
 
+Every client-scoped table below carries `organization_id` and `client_id` with a composite FK `(client_id, organization_id) → clients(id, organization_id)`. The Auto CRM link lives in `external_links` (provider `auto_crm`), not on `clients`.
+
 ## Domain collections
 
 ### client_offers
@@ -67,7 +68,9 @@ id, organization_id, client_id, name, position, source_system, source_stage_id n
 id, organization_id, client_id, name, url, positioning, offer_summary, observations jsonb, evidence jsonb, last_reviewed_at.
 
 ### client_creative_context
-id, organization_id, client_id, pillars jsonb, approved_formats jsonb, visual_constraints jsonb, winning_angles jsonb, losing_angles jsonb, proof_assets jsonb, production_constraints jsonb.
+id, organization_id, client_id, pillars jsonb, approved_formats jsonb, visual_constraints jsonb, manual_angle_seeds jsonb, proof_assets jsonb, production_constraints jsonb.
+
+Winning/losing angles and hooks are **not** stored here: they are read from `learnings` (scope client, category `creative_angle`/`hook`) so they stay evidence-linked. `manual_angle_seeds` holds operator knowledge before any test exists. Brand assets live in `brand_kits` and `media_assets` (see `creative-data-model.md`).
 
 ### knowledge_items
 id, organization_id, client_id, title, type, source_url nullable, storage_path nullable, extracted_text/reference, status, metadata jsonb, created_at, updated_at.
@@ -75,8 +78,8 @@ id, organization_id, client_id, title, type, source_url nullable, storage_path n
 ### client_decisions
 id, organization_id, client_id, category, decision, rationale, effective_at, status, source_type, source_reference, created_by, created_at.
 
-### integration_mappings
-id, organization_id, client_id, provider, external_account_id, external_entity_type, external_entity_id, metadata jsonb, status.
+### external_links
+Replaces the earlier `integration_mappings`. See `integrations.md`.
 
 ## Fact provenance
 
@@ -89,7 +92,7 @@ For fields that require independent review/history, prefer a fact record rather 
 - namespace
 - key
 - value jsonb
-- status: confirmed | inferred | outdated | needs_review
+- status: confirmed | inferred | needs_review | rejected | outdated
 - source_type
 - source_reference
 - confidence nullable
@@ -99,7 +102,14 @@ For fields that require independent review/history, prefer a fact record rather 
 - reviewed_at nullable
 - supersedes_fact_id nullable
 
-This is useful for AI-derived or CRM-derived facts without making the primary relational model unstructured.
+This is useful for AI-derived or Auto CRM-derived facts without making the primary relational model unstructured.
+
+### Facts vs. profile tables (single source of truth rule)
+- Profile tables (`client_profiles` and the domain collections) hold the **current confirmed state** and are what tools and UI read.
+- `client_facts` is the **review and provenance layer**. AI and integrations never write profile tables directly; they write facts with status `inferred`/`needs_review`.
+- A `fact_field_map` (namespace.key → table.column or collection operation) defines where a confirmed fact is applied. `confirm_client_fact` applies the value in the same transaction and marks the previous fact `outdated` via `supersedes_fact_id`.
+- Human edits in the UI write the profile table and a `confirmed` fact with `source_type = manual` so history is uniform.
+- Facts without a mapping remain facts only (e.g. long-tail observations) and are retrievable via tools.
 
 ## Security
 - RLS on tenant-owned tables.
@@ -116,4 +126,4 @@ At minimum:
 - vector/search indexes only when Knowledge Base retrieval is implemented.
 
 ## Versioning
-Historical campaign/experiment decisions must retain the context they were made against. Prefer snapshots/references for consequential AI runs rather than assuming the current profile represents historical truth.
+Historical campaign/experiment decisions must retain the context they were made against. Every AI run stores its context pack in `context_snapshots` (see `operations-data-model.md`), so past decisions are reproducible without a fully temporal profile. Goals, budgets and decisions are already effective-dated. A general `as_of` query on the profile is deferred until a concrete need appears.

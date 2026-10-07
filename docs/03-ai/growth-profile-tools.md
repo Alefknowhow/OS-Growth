@@ -1,54 +1,38 @@
 # Growth Profile Agent Tools
 
-Purpose-specific tools prevent agents from receiving an uncontrolled dump of all client context.
+Purpose-specific tools prevent agents from receiving an uncontrolled dump of all client context. Canonical names and classes are in `tools.md`; this file details the profile subset.
 
 ## get_client
-Returns identity, status and compact business summary.
+Identity, status, readiness and compact business summary.
 
 ## get_growth_profile
-Returns a scoped profile view selected by sections and workflow purpose.
+Scoped profile view selected by sections and workflow purpose.
+Input: `client_id`, `sections[]`. Historical reproduction uses `context_snapshots`, not an `as_of` parameter.
 
-Suggested input:
-- client_id
-- sections[]
-- as_of nullable
-
-## get_offers
-Filters active/prioritized offers and commercial constraints.
-
-## get_personas
-Returns ICP/persona context relevant to an offer or campaign.
-
-## get_goals
-Returns active goals, KPI targets and measurement period.
-
-## get_budget_context
-Returns active budget allocations and operating constraints.
-
-## get_funnel
-Returns mapped stages, expected rates and CRM/revenue mappings.
-
-## get_creative_context
-Returns brand/creative rules and approved learnings.
+## get_offers / get_personas / get_goals / get_budget_context / get_funnel / get_creative_context / get_brand_kit
+Section reads. `get_creative_context` merges manual seeds with validated learnings (winning/losing angles, hooks).
 
 ## search_client_knowledge
-Retrieves evidence from the client Knowledge Base with source references.
+Evidence from the Knowledge Base with source references.
 
 ## get_client_decisions
-Returns relevant strategic decisions effective for a requested date/context.
+Strategic decisions effective for a date/context.
 
 ## propose_client_fact
-Allows AI to propose a new fact as inferred/needs_review. It cannot silently create a confirmed fact.
+Proposes a fact as `inferred`/`needs_review` with provenance. Cannot create confirmed facts.
 
-## confirm_client_fact
-Human-authorized workflow/tool for promoting reviewed facts to confirmed status.
+## confirm_client_fact (human-only)
+Promotes a reviewed fact to `confirmed` and applies it to the mapped profile field (see `../02-architecture/growth-profile-data-model.md`).
 
 ## Context packs
-The application may expose deterministic context-pack builders:
-- performance_analysis
-- creative_strategy
-- content_generation
-- reporting
-- experiment_review
+| Pack | Required | Optional |
+|---|---|---|
+| performance_analysis | goals, KPIs, conversion definitions, budget, signals, metrics | funnel, decisions, learnings |
+| media_buying | goals, budget, envelope summary, insights, action history, entity state | learnings, seasonality |
+| creative_strategy | offers, personas, positioning, creative performance, learnings | competitors, knowledge |
+| content_generation | brief, offer, persona, tone, approved/prohibited claims | examples of winning copy |
+| creative_production | brief, skill spec, brand kit, candidate assets with consent | previous variants |
+| reporting | goals, period metrics, executed actions, outcomes, learnings | client notes |
+| command_resolution | client list (assigned), entity names index | recent commands |
 
-Each pack defines required/optional sections and token/data limits. This makes agent behavior reproducible and observable.
+Each pack defines token/data limits and freshness requirements; runs fail visibly if required sections are missing (and readiness reflects it).

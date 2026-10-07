@@ -1,10 +1,12 @@
 # Product Principles
 
-1. **Context before recommendations** — agents must understand client goals, offer, ICP, constraints and history.
-2. **Revenue over vanity metrics** — connect media signals to CRM sales/revenue whenever possible.
-3. **Evidence before action** — preserve the metrics/events behind every recommendation.
-4. **Structured learning** — experiments must produce reusable conclusions.
-5. **Human control by default** — autonomy increases only when policies and auditability exist.
-6. **One source of truth per domain** — do not duplicate CRM ownership.
-7. **Operational leverage** — features should reduce manual work or improve decision quality.
-8. **Composable AI** — agents use shared typed tools and data, with the orchestrator coordinating work.
+1. **Operator as controller** — the system does the work; humans set policy, approve and handle exceptions.
+2. **Plans before actions** — every change is a Plan with evidence, expected impact, risk and rollback. Policy decides if it auto-executes or waits for approval.
+3. **Earned autonomy** — autonomy widens per client and per action type based on track record, never globally by default.
+4. **Context before recommendations** — agents use the client's goals, offers, ICP, constraints and history via context packs.
+5. **Revenue over vanity metrics** — tie media to conversions and, when available, sales and revenue.
+6. **Evidence before action** — keep raw data and the signals behind every insight and plan.
+7. **Deterministic where possible** — detection, policy, execution and orchestration are code; LLMs interpret, plan and create.
+8. **Structured learning** — outcomes and experiments produce reusable, evidence-linked learnings.
+9. **One source of truth per domain** — Auto CRM owns sales/relationship; Growth OS owns delivery.
+10. **Everything auditable** — every command, plan, approval, execution and AI run is traceable.

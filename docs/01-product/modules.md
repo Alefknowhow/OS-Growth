@@ -1,31 +1,45 @@
 # Product Modules
 
-## Command Center
-Agency-level attention dashboard: clients, spend, performance, risks, tests, approvals, tasks and AI recommendations.
+## Command Center (agency level)
+The operator's control seat.
+- Attention feed: signals, insights, pending approvals, failed/rolled-back actions, creative reviews, overdue tasks.
+- Approval Inbox: pending plans ordered by risk and expiry (see `plans-and-approvals.md`).
+- Executed feed: what ran automatically, with undo where possible.
+- Daily digest (text + optional audio summary).
+- Voice / text command bar (see `voice-commands.md`).
+- Portfolio view: all clients with health, spend vs budget, goal progress, autopilot status.
+- Global and per-client kill switches.
 
-## Clients / Growth Profile
-Business context, ICP, personas, offers, goals, budgets, KPIs, competitors, brand guidelines, connected accounts and knowledge base.
+## Client Intelligence Center (per client)
+Single hub for everything about one client. See `client-intelligence-center.md`.
 
 ## Paid Media
-Meta Ads first; Google Ads later. Accounts, campaigns, ad sets/groups, ads, audiences, budgets, metrics and change history.
+Ad accounts, campaigns, ad sets, ads, creatives, budgets, metrics, change history (including edits made outside Growth OS) and ad previews. Meta first; Google Ads later.
 
-## Creative Lab
-Ideas, hooks, angles, copies, scripts, briefs and generated/attached assets.
+## Plans & Approvals
+Plans, proposed actions, policy decisions, approvals, execution status, outcomes, rollback. See `plans-and-approvals.md` and `docs/03-ai/autonomy-policy.md`.
 
-## Creative Library
-Raw → production → internal approval → client approval → approved/rejected → published.
+## Creative Studio
+- **Media Library** — the client's raw material (logos, photos, videos, audio, documents, brand kit). See `media-library.md`.
+- **Creative Skills** — pre-built production recipes per format. See `docs/03-ai/creative-skills.md`.
+- **Creative Jobs** — automated production runs (Higgsfield, motion graphics, copy).
+- **Creative Library** — finished creatives with lifecycle: draft → internal review → client review → approved → published → retired.
+See `creative-automation.md`.
 
 ## Experiments
 Hypothesis, variants, KPI, budget, status, result, conclusion and learning.
 
+## Reports
+Scheduled and on-demand reports generated from normalized data plus an AI narrative; published internally and to the Client Portal.
+
 ## Projects & Tasks
-Kanban, responsibilities, deadlines, recurring work, subtasks, attachments and AI-created tasks.
+Tasks for humans (e.g. "record new testimonial video", "fix pixel"), created by agents or people.
 
 ## Growth AI
-Orchestrator, specialist agents, insights, actions, approvals and activity/audit logs.
-
-## Analytics & Reports
-Performance dashboards, funnel/revenue metrics, reports and trend/anomaly analysis.
+Agents, runs, tool calls, context packs, prompt/skill versions, costs and evals. Observability for the AI layer.
 
 ## Client Portal
-Later-stage restricted experience for dashboards, reports and creative approvals.
+Restricted client experience. See `client-portal.md`.
+
+## Settings
+Organization, users, roles, client assignments, connections, policies/autopilot envelopes, brand kits, skills registry.

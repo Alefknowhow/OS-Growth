@@ -1,12 +1,17 @@
 # Client Portal
 
-The Client Portal is not part of the first working loop.
+Restricted experience for each client (M4). Same app, separate audience, strict scope.
 
-Future scope:
-- simplified performance dashboard
-- reports
-- creative review/approval
-- comments/feedback
-- selected project visibility
+## Capabilities
+- **Dashboard:** simplified KPIs vs goals, spend vs budget, trends, top creatives (approved data only, no internal signals).
+- **Reports:** published reports (web + PDF), history.
+- **Creative approvals:** review creatives sent for client approval; approve / request changes with comments and annotations.
+- **Media upload:** send logos, photos, videos; see the "what to record" checklist.
+- **Requests:** ask for new campaigns/creatives; becomes a request in the client's Intelligence Center (not an automatic action).
+- **Notifications:** email/WhatsApp-style notifications for reports and pending approvals (via Auto CRM or direct, decided in M4).
 
-Clients must never receive access to internal strategy, other tenants, private AI reasoning artifacts, credentials or unrestricted operational controls.
+## Never exposed
+Internal strategy notes, signals/insights drafts, plans, AI reasoning artifacts, other clients, credentials, operational controls, costs/margins of the agency.
+
+## Access model
+Portal users are separate principals (`client_portal_users`) bound to exactly one client. Every portal query is scoped by `client_id` server-side and by RLS. See `permissions.md`.

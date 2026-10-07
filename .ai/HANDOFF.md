@@ -1,23 +1,19 @@
 # AI Handoff
 
 ## Project
-Growth OS — internal-first AI-powered operating system for paid media and growth operations.
-
-## Current phase
-M0 — Foundation.
+Growth OS — AI-native operating system for an automated paid traffic and acquisition agency (internal-first, multi-tenant).
 
 ## Product split
-CRM remains the system of record for relationship and revenue.
-Growth OS is the system of record for paid media delivery, creative operations, experiments and performance.
+Auto CRM: agency sales and client relationship. Growth OS: delivery (media, creatives, plans, execution, performance, reports, learning). Integrated by events + MCP.
 
-## First target loop
-Meta Ads data → normalized metrics → Performance Analyst → issue/opportunity → Creative Strategist → hypothesis → Content Agent → copy/script/brief → task.
+## Operating model
+Agents analyze and plan → Policy Engine decides auto-execute vs approval → Execution Service performs provider writes → outcomes feed learning. Operator approves via web, mobile, voice or Claude app (MCP).
 
-## Initial AI agents
-- Growth Orchestrator
-- Performance Analyst
-- Creative Strategist
-- Content Agent
+## Current phase
+M0 closing. Next: M1 — Intelligence (read-only): Meta sync, signals, Performance Analyst, digest, Client Intelligence Center, Media Library v1, Growth OS MCP read tools.
+
+## Key docs
+`docs/02-architecture/first-working-loop.md`, `docs/03-ai/autonomy-policy.md`, `docs/02-architecture/operations-data-model.md`, `docs/02-architecture/performance-data-model.md`, `docs/03-ai/creative-skills.md`, `docs/04-integrations/auto-crm.md`, `.ai/DECISIONS.md`.
 
 ## Guardrails
-No broad autonomous campaign writes in the MVP. Begin read-only/recommendation-first, then add prepared actions requiring approval.
+Agents never hold provider write access. Every change is a Plan through the Policy Engine. Autonomy per client × action type, earned by track record. Consent-gated media. Never commit secrets.

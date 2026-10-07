@@ -119,8 +119,7 @@ For each relevant competitor:
 - existing creative pillars
 - approved formats
 - visual constraints
-- winning/losing angles
-- hooks
+- winning/losing angles and hooks (derived from learnings; manual seeds allowed)
 - proof assets
 - spokesperson availability
 - raw-material availability
@@ -128,10 +127,11 @@ For each relevant competitor:
 
 ### 10. Integrations
 References to connected:
-- Meta ad accounts
+- Meta ad accounts, pixels/datasets, pages
 - Google Ads accounts
 - GA4 properties
-- CRM organization/account
+- Auto CRM account (agency relationship)
+- client conversion sources (client CRM, lead forms, offline conversions)
 - websites / tracked domains
 
 Credentials never live in the Growth Profile itself.
@@ -146,7 +146,9 @@ Documents and references such as:
 - sales scripts
 - previous reports
 - research
-- approved meeting/CRM-derived insights
+- approved meeting/Auto CRM-derived insights
+
+Raw media (logos, photos, videos) lives in the Media Library, not in the Knowledge Base.
 
 ### 12. Strategic Notes & Decisions
 Store explicit decisions with date, author/source, rationale and status.
@@ -155,10 +157,11 @@ Store explicit decisions with date, author/source, rationale and status.
 Important profile facts should support:
 - confirmed
 - inferred
-- outdated
 - needs_review
+- rejected
+- outdated
 
-AI may propose/infer context, but inferred facts must not silently become confirmed.
+AI may propose/infer context, but inferred facts must not silently become confirmed. Profile tables hold the current confirmed state; `client_facts` is the review and provenance layer that feeds them (see `docs/02-architecture/growth-profile-data-model.md`).
 
 ## Provenance
 Where useful, a fact can include:
@@ -180,17 +183,6 @@ Examples:
 - Orchestrator: compact client summary plus the context required by the selected workflow.
 
 ## Initial onboarding
-Recommended setup flow:
-1. Business basics
-2. Products/offers
-3. ICP/personas
-4. Positioning/message
-5. Goals/KPIs
-6. Budget/constraints
-7. Funnel/sales process
-8. Brand/creative context
-9. Integrations
-10. Knowledge upload
-11. Review and confirm
+See `client-onboarding.md`.
 
 The profile remains editable after onboarding and should surface stale/unknown critical fields over time.
